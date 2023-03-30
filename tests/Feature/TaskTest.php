@@ -43,6 +43,7 @@ it('is possible to fetch a single task status from database', function () {
         'created_at'   => now()->subDays(1),
     ]);
 
+    // This is the latest status
     TaskStatus::create([
         'user_task_id' => 1,
         'status_id'    => 1,   // Completed
