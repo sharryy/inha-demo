@@ -4,16 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('personalised_tasks', function (Blueprint $table) {
+        Schema::create('user_tasks', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->string('name', 255);
             $table->string('snippet', 255);
@@ -24,15 +25,19 @@ return new class extends Migration
             $table->boolean('is_recurring');
             $table->boolean('is_active');
             $table->boolean('is_private');
-            $table->boolean('is_draft');
-            $table->boolean('is_approved');
-            $table->json('seo');
-            $table->bigInteger('points');
             $table->integer('impact')->comment('How much impact does this task have on the world? 1 for very_high, 2 for high, 3 for medium, 4 for low, 5 for very_low');
+            $table->timestamp('original_task_updated_at')->nullable();
+            $table->timestamp('archived_at')->nullable();
 
             $table->foreign('task_id')
                 ->references('id')
                 ->on('tasks')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 

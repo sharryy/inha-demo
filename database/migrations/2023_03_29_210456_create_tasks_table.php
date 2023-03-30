@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->text('description');
             $table->text('reason_for_happiness');
             $table->text('steps');
-            $table->string('image_url', 255);
+            $table->string('banner_url', 255);
             $table->boolean('is_recurring');
             $table->boolean('is_active');
             $table->boolean('is_private');

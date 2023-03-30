@@ -10,16 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('task_images', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('country_id');
+            $table->string('name')->default('');
 
-            $table->morphs('imageable');
-            $table->string('image_url', 255);
-            $table->string('image_alt', 255);
-            $table->string('mime_type', 255);
-            $table->integer('width');
-            $table->integer('height');
-            $table->integer('order')->nullable();
+            $table->foreign('country_id')
+                ->references('id')
+                ->on('countries')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_images');
+        Schema::dropIfExists('states');
     }
 };

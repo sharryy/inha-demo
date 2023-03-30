@@ -10,24 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('task_lists', function (Blueprint $table) {
+        Schema::create('task_statuses', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('personalised_task_id');
-            $table->integer('status')->comment('Indicates the status of the task list. 1 = Complete, 2 = Todo, 3 = On Hold, 4 = Archived');
-            $table->integer('sort_order');
-            $table->dateTime('completed_at')->nullable();
+            $table->unsignedBigInteger('user_task_id');
+            $table->unsignedBigInteger('status_id');
 
-            $table->foreign('user_id')
+            $table->foreign('user_task_id')
                 ->references('id')
-                ->on('users')
+                ->on('user_tasks')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreign('personalised_task_id')
+            $table->foreign('status_id')
                 ->references('id')
-                ->on('personalised_tasks')
+                ->on('statuses')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
@@ -40,6 +37,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_lists');
+        Schema::dropIfExists('task_statuses');
     }
 };

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('user_id');
             $table->boolean('is_accepted')->default(false);
+            $table->text('message')->nullable();
 
             $table->foreign('task_id')
                 ->references('id')
