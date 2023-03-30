@@ -20,11 +20,11 @@ return new class extends Migration {
             $table->text('reason_for_happiness');
             $table->text('steps');
             $table->string('banner_url', 255);
-            $table->boolean('is_recurring');
-            $table->boolean('is_active');
-            $table->boolean('is_private');
-            $table->boolean('is_draft');
-            $table->boolean('is_approved');
+            $table->boolean('is_recurring')->nullable();
+            $table->boolean('is_active')->nullable();
+            $table->boolean('is_private')->nullable();
+            $table->boolean('is_draft')->nullable();
+            $table->boolean('is_approved')->nullable();
             $table->json('seo');
             $table->integer('points');
             $table->integer('impact')->comment('How much impact does this task have on the world? 1 for very_high, 2 for high, 3 for medium, 4 for low, 5 for very_low');

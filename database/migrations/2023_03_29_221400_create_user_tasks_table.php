@@ -21,10 +21,10 @@ return new class extends Migration {
             $table->text('description');
             $table->text('reason_for_happiness');
             $table->text('steps');
-            $table->string('image_url', 255);
-            $table->boolean('is_recurring');
-            $table->boolean('is_active');
-            $table->boolean('is_private');
+            $table->string('banner_url', 255);
+            $table->boolean('is_recurring')->nullable();
+            $table->boolean('is_active')->nullable();
+            $table->boolean('is_private')->nullable();
             $table->integer('impact')->comment('How much impact does this task have on the world? 1 for very_high, 2 for high, 3 for medium, 4 for low, 5 for very_low');
             $table->timestamp('original_task_updated_at')->nullable();
             $table->timestamp('archived_at')->nullable();
