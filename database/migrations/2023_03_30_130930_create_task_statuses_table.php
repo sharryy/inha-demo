@@ -13,27 +13,9 @@ return new class extends Migration {
         Schema::create('task_statuses', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_task_id');
-            $table->unsignedBigInteger('from_status_id')->nullable();
-            $table->unsignedBigInteger('to_status_id');
-
-            $table->foreign('user_task_id')
-                ->references('id')
-                ->on('user_tasks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('from_status_id')
-                ->references('id')
-                ->on('statuses')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('to_status_id')
-                ->references('id')
-                ->on('statuses')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('user_task_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('from_status_id')->nullable()->constrained('statuses')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('to_status_id')->constrained('statuses')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->string('ip_address');
 
             $table->boolean('is_admin')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(false);
             $table->boolean('is_searchable')->default(true);
             $table->boolean('is_preference_public')->default(true);
 
