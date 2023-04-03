@@ -26,40 +26,45 @@ it('is possible to fetch a single task status from database', function () {
     $this->assertDatabaseCount('statuses', 3);
 
     TaskStatus::create([
-        'user_task_id' => 1,
-        'status_id'    => 3,   // On Hold
-        'created_at'   => now()->subDays(3),
+        'user_task_id'   => 1,
+        'from_status_id' => 3,   // On Hold
+        'to_status_id'   => 2,   // To Do
+        'created_at'     => now()->subDays(3),
     ]);
 
     TaskStatus::create([
-        'user_task_id' => 1,
-        'status_id'    => 2,  // To Do
-        'created_at'   => now()->subDays(2),
+        'user_task_id'   => 1,
+        'from_status_id' => 2,  // To Do
+        'to_status_id'   => 3,  // On Hold
+        'created_at'     => now()->subDays(2),
     ]);
 
     TaskStatus::create([
-        'user_task_id' => 1,
-        'status_id'    => 3,    // On Hold
-        'created_at'   => now()->subDays(1),
+        'user_task_id'   => 1,
+        'from_status_id' => 3,    // On Hold
+        'to_status_id'   => 2,    // To Do
+        'created_at'     => now()->subDays(1),
     ]);
 
     // This is the latest status
     TaskStatus::create([
-        'user_task_id' => 1,
-        'status_id'    => 1,   // Completed
-        'created_at'   => now(),
+        'user_task_id'   => 1,
+        'from_status_id' => 2,   // To Do
+        'to_status_id'   => 1,   // Completed
+        'created_at'     => now(),
     ]);
 
     TaskStatus::create([
-        'user_task_id' => 2,
-        'status_id'    => 1,  // Completed
-        'created_at'   => now(),
+        'user_task_id'   => 2,
+        'from_status_id' => 2,  // To Do
+        'to_status_id'   => 1,  // Completed
+        'created_at'     => now(),
     ]);
 
     $this->assertDatabaseCount('task_statuses', 5);
 
     $task = UserTask::with('currentStatus')->find(1);
-
+    dd($task->toArray());
     expect($task)->not()->toBeNull()
         ->and($task->currentStatus)->not()->toBeEmpty()
         ->and($task->currentStatus->first()->name)->toBe('Completed')

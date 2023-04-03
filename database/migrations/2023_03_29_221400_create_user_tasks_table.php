@@ -13,33 +13,21 @@ return new class extends Migration {
         Schema::create('user_tasks', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('task_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('task_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->string('name', 255);
             $table->string('snippet', 255);
             $table->text('description');
             $table->text('reason_for_happiness');
             $table->text('steps');
-            $table->string('banner_url', 255);
-            $table->boolean('is_recurring')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->boolean('is_private')->nullable();
+            $table->string('banner_url', 255)->nullable();
+            $table->boolean('is_recurring')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_private')->default(false);
             $table->integer('impact')->comment('How much impact does this task have on the world? 1 for very_high, 2 for high, 3 for medium, 4 for low, 5 for very_low');
             $table->timestamp('original_task_updated_at')->nullable();
             $table->timestamp('archived_at')->nullable();
-
-            $table->foreign('task_id')
-                ->references('id')
-                ->on('tasks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
 
             $table->timestamps();
         });

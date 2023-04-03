@@ -18,7 +18,8 @@ trait InteractsWithRelations
 
     public function currentStatus(): belongsToMany
     {
-        return $this->belongsToMany(Status::class, 'task_statuses', 'user_task_id', 'status_id')
+        return $this->belongsToMany(Status::class, TaskStatus::class, 'user_task_id', 'to_status_id')
+            ->withPivot('from_status_id', 'created_at')
             ->latest('task_statuses.created_at')
             ->take(1);
     }

@@ -13,23 +13,10 @@ return new class extends Migration {
         Schema::create('task_tags', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('task_id');
-            $table->unsignedBigInteger('tag_id');
-
-            $table->foreign('task_id')
-                ->references('id')
-                ->on('tasks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('tag_id')
-                ->references('id')
-                ->on('tags')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('task_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->unique(['task_id', 'tag_id']);
-
             $table->timestamps();
         });
     }

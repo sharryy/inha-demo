@@ -13,25 +13,12 @@ return new class extends Migration {
         Schema::create('task_invitations', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('task_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('task_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean('is_accepted')->default(false);
             $table->text('message')->nullable();
 
-            $table->foreign('task_id')
-                ->references('id')
-                ->on('tasks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
             $table->unique(['task_id', 'user_id']);
-
             $table->timestamps();
         });
     }

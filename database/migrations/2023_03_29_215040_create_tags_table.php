@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tag_type_id');
+            $table->foreignId('tag_type_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->string('name', 255);
             $table->boolean('is_approved');
@@ -20,12 +20,6 @@ return new class extends Migration {
             $table->integer('usage_points')->default(0);
             $table->integer('manual_points')->default(0);
             $table->integer('total_points')->virtualAs('usage_points + manual_points');
-
-            $table->foreign('tag_type_id')
-                ->references('id')
-                ->on('tag_types')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
 
             $table->timestamps();
         });

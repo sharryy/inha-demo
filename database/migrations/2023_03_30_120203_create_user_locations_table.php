@@ -13,37 +13,12 @@ return new class extends Migration {
         Schema::create('user_location_preference', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('country_id')
-                ->references('id')
-                ->on('countries')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('state_id')
-                ->references('id')
-                ->on('states')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('city_id')
-                ->references('id')
-                ->on('cities')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->unique(['user_id', 'country_id', 'state_id', 'city_id'], 'user_location_preference_unique');
-
             $table->timestamps();
         });
     }

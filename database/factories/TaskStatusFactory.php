@@ -20,8 +20,9 @@ class TaskStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_task_id' => UserTask::inRandomOrder()->first()->id,
-            'status_id'    => Status::inRandomOrder()->first()->id,
+            'user_task_id'   => UserTask::inRandomOrder()->first()->id,
+            'from_status_id' => Status::inRandomOrder()->first()->id,
+            'to_status_id'   => Status::inRandomOrder()->first()->id,
         ];
     }
 }

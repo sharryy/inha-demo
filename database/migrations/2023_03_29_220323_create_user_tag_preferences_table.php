@@ -13,20 +13,8 @@ return new class extends Migration {
         Schema::create('user_tag_preferences', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('tag_id');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('tag_id')
-                ->references('id')
-                ->on('tags')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->id();
 
             $table->unsignedBigInteger('user_task_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('from_status_id')->nullable();
+            $table->unsignedBigInteger('to_status_id');
 
             $table->foreign('user_task_id')
                 ->references('id')
@@ -22,7 +23,13 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreign('status_id')
+            $table->foreign('from_status_id')
+                ->references('id')
+                ->on('statuses')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->foreign('to_status_id')
                 ->references('id')
                 ->on('statuses')
                 ->cascadeOnUpdate()

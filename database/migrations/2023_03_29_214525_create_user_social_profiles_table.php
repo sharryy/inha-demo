@@ -13,16 +13,10 @@ return new class extends Migration {
         Schema::create('user_social_profiles', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('provider', 255);
             $table->string('profile_url', 255);
             $table->string('icon_url', 255);
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
 
             $table->timestamps();
         });
